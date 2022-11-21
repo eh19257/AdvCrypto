@@ -1,0 +1,10 @@
+Q1a.
+
+Because Curve25519 is a Monetgomery curves, it means that we can do x-only arithmetic on it. If we have some Q\in E(F_{P^2}) and the function X [theorem 2.1, CURVE25519], then we can represent X(Q)= i/j where i/j is the quotient of Q. Here X(2Q) or X(Q+Q) = x_2/z_2, defined in [appendix B, CURVE25519]. Thus we get our x-only point as:
+
+7870538420911991717785453005997772929543321076076670267330433180192557165563
+
+See code for details + possible y coords.
+
+Q1b.
+
