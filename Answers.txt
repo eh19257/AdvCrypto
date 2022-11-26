@@ -1,4 +1,4 @@
-Q1a.
+Q1a.    VERIFIED
 
 Because Curve25519 is a Monetgomery curves, it means that we can do x-only arithmetic on it. If we have some Q\in E(F_{P^2}) and the function X [theorem 2.1, CURVE25519], then we can represent X(Q)= i/j where i/j is the quotient of Q. Here X(2Q) or X(Q+Q) = x_2/z_2, defined in [appendix B, CURVE25519]. Thus we get our x-only point as:
 
@@ -6,5 +6,118 @@ Because Curve25519 is a Monetgomery curves, it means that we can do x-only arith
 
 See code for details + possible y coords.
 
-Q1b.
+CODE!!!
 
+
+Q1b.    NOT-VERIFIED
+
+If we have our curve25519 E in montegomery form defined as v^2 = u^3 + 486664*u^2 + u and we have E' define in Edwards form as x^2 + y^2 = 1 + (121665/121666)*x^2*y^2. Then our isomorphism from E --> E' is
+
+
+(u, v) --> (\sqrt{486664}*(u/v), (u-1)/(u+1))
+
+
+Note: in a montegomery curve the point at infinity is the identity of the group. In an edwards curve the identity/neutral element is found at (0,1) and so we also need to add the map.
+
+(infity) --> (0, 1)
+
+This preservese the structure of the group.
+
+To compute the image of P under this isomorphism we need to be aware that the point P could actually be 1 of 2 points on the Montegomery curve; this means that the image of P could be 2 possible points on the edwards form of the cureve. These points are found below:
+
+( 37387454968727511622214959099684673184319477956013400619436078499328636200908 ,  34737626771194858627071295502606372355980995399692169211837275202373938891970 )
+
+( 20508589649930586089570533404659280742315514376806881400292713504627928619041 ,  34737626771194858627071295502606372355980995399692169211837275202373938891970 )
+
+
+Edwards Isomorphism!!!
+
+
+
+
+Q1c.    NOT-VERIFIED
+
+Addition on edwards curves require us to use edwards addition law which is seen below:
+
+
+(x_1, y_1) + (x_2, y_2) = ( (x_1*y_2 + x_2*y_1)/(1 + d*x_1*x_2*y_1*y_2), (y_1*y_2 - x_1*x_2)/(1-d*x_1*x_2*y_1*y_2*) )
+
+This is done in the code and we get:
+
+```
+First option for 2ϕ(P): (40385594504405692086104112980149709906478598808138409825169278573180917393866, 31058830660134288572635780034818717411856733521435893538594161317836633613108)
+Second option for 2ϕ(P): (17510450114252405625681379524194244020156393524681872194559513430775647426083, 31058830660134288572635780034818717411856733521435893538594161317836633613108)
+```
+
+Note: these 2 points have the same y values, this occurs as the 2 original options for point P on the curve in the Montegomery form had the same x-coord.
+
+
+
+Q2a.    NOT-VERIFIED
+
+If we have an oracle that can solve the DLP in either G_1, G_2 or G_3 means that we can solve the DLP in the remaining 2 groups.
+
+Case that we have an oracle that solves G_1, then we need some way to reduce the DLP of G_2 and G_3 to G_1. We can do this using an editted version of the MOV reduction/attack.
+
+Say we have P \in G_1 and Q \in G_2, then we can reduce the G_3 DLP to G_1 as such.
+
+e(P, Q)^a = e(aP, Q)
+
+We can reduce a G_2 DLP to G_3, which we can then inturn reduce to G_1.
+
+e(P, bQ) = e(P, Q)^b = e(bP, Q)
+
+
+Case that we have an oracle that sovles G_2, then we need to reduce G_1 and G_3 to G_2. G_3 can be reduced to G_2 as such...
+
+e(P, Q)^c = e(P, cQ)
+
+... and G_1 to G_2:
+
+e(aP, Q) = e(P, Q)^a = e(P, aQ)
+
+
+Case that we have an oracle that solves the DLP for G_3 then we need a reduction from G_1 to G_3 and G_2 to G_3. The former is as follows:
+
+e(aP, Q) = e(P, Q)^a 
+
+and the latter:
+
+e(P, bQ) = e(P, Q)^b
+
+
+EFFICIENTICY EFFICIENTICY EFFICIENTICY!!!
+
+
+
+Q5a.    NOT VERIFIED
+
+    Setup for the X3DH part of this question
+        - Bob uploads his prekey bundle to the server
+        - Alice requests them and uses them to find the shared secret key (ssk)
+
+    i.     X3DH -  The identity keys of each party provides authentication of themselves as they are used to sign their corresponding prekeys, which are verified whenever the prekey bundle is received by a party. However, this provides mutual authentication and not full authentication as anyone could technically upload their prekey bundle and say that they're bob.
+
+
+            Double Ratchet - 
+
+
+    ii.     X3DH - A diffie Hellman exchange is used which ensures that the ssk cannot be found. Eve could also carry out a replay attack on Alice and Bob. NEED TO DO MORE!!!
+
+            Double Ratchet - Again a DH exchange is used, in the DH ratchet
+
+    iii.     X3DH - During the key agreement when Alice requests Bob's prekey bundle from the server, Alice creates an ephemeral key that is used in 1 or optionally 2 Diffie-Hellman keyexchanges; being an ephemeral key it is deleted as soon as it is used to generate the ssk therefore providing perfect-forward secrecy.
+    
+    After some time interval, bob must upload a new signed prekey and once then old private key has been used, it must be deleted - this ensures that previous messages cannot be view by some future adversary.
+
+    If a secret prekey and and identity key is compomrised, then previous SKs cn be generated however the intervaled replacement of these prekeys means that not all SKs can be recalculated.
+
+    One-time KEY!!!!
+
+            Double Ratchet - Because the ratchett uses a KDF chain, each new key that is generate is indistinguishable from random data and so if an adversary learns that some key they cannot reverse the KDF chain and therefore not recovery previous keys.
+
+    iv.     X3DH - If a parties identity key and secret prekey are compromised then previous shared secret keys could be calculated, however the frequent replacement of the party's secret prekey means that as soon as a new secret prekey is used, the new SK becomes unknown to the adversary. 
+
+            Double Ratchet - The DH ratchett in the double rachett ensures that all future messages are encrypted if the current sending and recieveing chain keys become compromised. (((((This occurs as whenever a party sends a message they generate a DH key pair which becomes their current ratchet key and then they send off the public key with the message.)))))
+
+                   
