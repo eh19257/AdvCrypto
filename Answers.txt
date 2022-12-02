@@ -55,39 +55,136 @@ Note: these 2 points have the same y values, this occurs as the 2 original optio
 
 Q2a.    NOT-VERIFIED
 
-If we have an oracle that can solve the DLP in either G_1, G_2 or G_3 means that we can solve the DLP in the remaining 2 groups.
+    If we have an oracle that can solve the DLP in either G_1, G_2 or G_3 means that we can solve the DLP in the remaining 2 groups.
 
-Case that we have an oracle that solves G_1, then we need some way to reduce the DLP of G_2 and G_3 to G_1. We can do this using an editted version of the MOV reduction/attack.
+    Case that we have an oracle that solves G_1, then we need some way to reduce the DLP of G_2 and G_3 to G_1. We can do this using an editted version of the MOV reduction/attack.
 
-Say we have P \in G_1 and Q \in G_2, then we can reduce the G_3 DLP to G_1 as such.
+    Say we have P \in G_1 and Q \in G_2, then we can reduce the G_3 DLP to G_1 as such.
 
-e(P, Q)^a = e(aP, Q)
+    e(P, Q)^a = e(aP, Q)
 
-We can reduce a G_2 DLP to G_3, which we can then inturn reduce to G_1.
+    We can reduce a G_2 DLP to G_3, which we can then inturn reduce to G_1.
 
-e(P, bQ) = e(P, Q)^b = e(bP, Q)
-
-
-Case that we have an oracle that sovles G_2, then we need to reduce G_1 and G_3 to G_2. G_3 can be reduced to G_2 as such...
-
-e(P, Q)^c = e(P, cQ)
-
-... and G_1 to G_2:
-
-e(aP, Q) = e(P, Q)^a = e(P, aQ)
+    e(P, bQ) = e(P, Q)^b = e(bP, Q)
 
 
-Case that we have an oracle that solves the DLP for G_3 then we need a reduction from G_1 to G_3 and G_2 to G_3. The former is as follows:
+    Case that we have an oracle that sovles G_2, then we need to reduce G_1 and G_3 to G_2. G_3 can be reduced to G_2 as such...
 
-e(aP, Q) = e(P, Q)^a 
+    e(P, Q)^c = e(P, cQ)
 
-and the latter:
+    ... and G_1 to G_2:
 
-e(P, bQ) = e(P, Q)^b
+    e(aP, Q) = e(P, Q)^a = e(P, aQ)
 
 
-EFFICIENTICY EFFICIENTICY EFFICIENTICY!!!
+    Case that we have an oracle that solves the DLP for G_3 then we need a reduction from G_1 to G_3 and G_2 to G_3. The former is as follows:
 
+    e(aP, Q) = e(P, Q)^a 
+
+    and the latter:
+
+    e(P, bQ) = e(P, Q)^b
+
+
+    EFFICIENTICY EFFICIENTICY EFFICIENTICY!!!
+
+
+
+Q2b.
+        ////Efficient computation - In order to compute ssk Alice can follow her path which are a collection of small-degree (e.g. 3, 5, 7-degree) isogeny computations. If an attacker wants to find the path they would have to compute some isogeny from E-> E' - this could be multiple small isogenys or one big one either way this would take a long time to brute force.
+
+
+        Identity based-encrpytion can be built using pairs - if this is the case then we would need e to be bi-linear and e would also need non-degerenacy (e would also need to be easily computable); altenative e(G,G)=1.
+
+        DLP of the problem needs to be hard (or assumed to be). Reversal of pairings needs to be hard.  
+            - 
+
+        e needs to be bilinear
+
+
+        CSIDH
+            - b: S -> T
+            - In CISDH we want an isogeny Here we have
+        CSIDH can't do SxS -> T, it can only do SxS -> S
+
+        CSIDH has only one group of Es and not 2 (i.e. S and T). This property allows for a CSIDH to have a cyclic group but this isn't useful in pairings.
+        
+        //cyclice groupallows for a cyclic group nd doesn't have any way of matching 
+
+##############################################
+
+        In order for e to be generalised we need e to mimic a pairing - this means that it needs to have the following properties:
+            - Bilinearity
+            - Non-dengenarcy
+
+        The property of bilinearity is defined as such:
+
+        e(g_1 *_s s, g_2 *_s) = (g_1 \bullet g_2) *_T e(s, s)
+
+        This would implie that:
+
+        e(s,s) = b(s)
+            
+        ~ Non-degeneracy ~
+
+        We also need
+
+        On top of this we also need the group actions to have some hardness to them and in particular we need:
+            - asdf
+
+        The main issue with this generalised pairing being implemented using CSIDH is that CSIDH only has only one set whereas this map requires a mapping from one set to another. ((( only has one group E_A which consists of all Ellitptic curves within the scheme - e requires 2 different sets S and T.))) This means that e would map 2 elliptic curves to some other set (lets call it E'_A), the Ellitptic curve that we would get wouldn't necessarily be in E_A and so CSIDH wouldn't work as the party using this would have to compute some large isogeny from E to the element in T - this is computationally hard to do.
+        
+        ### in - which doesn't exist and so wouldnt't have any If we suggest that  The bilinearity property as defined above requires these 2 sets to function however
+
+        pairing to be usedIn order to generalise e so that is cat
+
+        group actions need to be efficiency computable
+
+        Things to note:
+            - properties of E
+                - bilinea
+                - non-degeneracy
+            - hardness of group actions?
+
+            - considerations of using CSIDH
+                - S->T
+
+        
+
+Q3.
+
+    a.      CRYSTLS-DILITHIUM
+
+            CRYSTALS-DILIHIUM is a latticed based digital signing algorithm (DSA) that has it's hardness based on 2 problems - module learning with errors (MLWE) and SelfTargetMSIS (which itself can be reduced to MSIS which itself is hard). Dilithium has shown to be hard to MLWE and SelfTargetMSIS in the quantum random oracle modle (QROM). MLWE can be defined as given some (A, t), can we distinguish between (A, t = As_1 + s_2) and (A, u) where u is some randomly generated data, A is a random sample of polynomials over some ring and both s_1 and s_2 are vectors.  SelftargetMSIS is defined as given H(m || [I|A]\bullet y) = c find the vector y.
+
+            Generating a key
+
+            The key generation algorithm consists of generating some k x l matrix A which is fully of polynomials uniformly randomly picked from \mathbb{Z}[X]/(X^n + 1). CRYSTALS-DILITHIUM also randomly picks 2 secret vectors s_1 and s_2 which are of size \script{l} and \script{k} respectively. The value t is defined as t = As_1 + s_2 and the public key-secret key pair is returned as ((A, t), (A, t, s1, s2)) respectively. We can see that the distinguishing the public key (A, t) from some random t would reduce to the MLWE problem.
+
+            Signing:
+
+            Sigining requires the signer to generate some a masking vector which contains all polynomial elements. The signer then computes Ay and sets the w_1 to be the higher bits of the coefficients of the addition between Ay and 2\gamma_2 (where \gamma_2 is a parameter to the scheme). The signer also creates a challenge c = H( M || w_1). Is is then used to generate z, a possible signature of the message m, with z = y + cs_1, long as the addition between. Outputting (z, c) as the signature now could be insecure and in order to mitigate this insecurity the signer can use rejection sampling on y until they have some value of y which leads to secure z. We can see how if we how the challenge c can be reduced to SelfTargetMSIS, therefore meaning the vectore of polynomials y is hard to pluck from it. 
+
+            Verifing:
+
+            A verifier computes some w'_1 is formed from the taking the high bits of the coefficients of (Az - ct) and accepts the signature if all of the coefficients of z are less than the scheme's parameter \gamma_1 - \beta and if c is the hash of the message || w'_1 We must note that Az-ct = Ay - cs_2
+            
+
+    b.
+        Implementation
+
+            Pros
+                Im comparison to SPHINCS+ keygeneration, signing and verification using AVX2 was significantly faster with CRYSTALS-dilithium. verifcation with SPHINCS-SHA2-128-simple would take ~800,000 cycles on a AVX2 to complete whereas it would take ~300,000 for CRYSTALS-dilithium.
+
+                In comparison to Falcon, dilithium is easier to implement and can make use of AES computing hardware to speed up matrix generation. Dilithium normally uses SHAKE instead of AES to expand the public matrix but the modularity of dilithium means that when hardware accelerated SHAKE becomes normal in the future, it can be easily and quickly changed.
+
+                The repetition of the generation the vector y in the signing of a message is independent of the secret vectors and so the variation in time doesn't leak any information about the secret of the private key. Falcon is runs in constant time which gives the algorithm high compexity.
+
+            Cons
+
+                Becuase both the public key and secret key contain a matrix it means that they're both quite large in comparison to the hash-based scheme SPHINCS+ and to Falcon.
+
+                Both LWE and SIS problems haven't been researched for as long as the one-wayness of hash functions and so there could be some algorithms that aid in the solving of these problems that haven't yet been discovered. 
 
 
 Q5a.    NOT VERIFIED
@@ -120,4 +217,19 @@ Q5a.    NOT VERIFIED
 
             Double Ratchet - The DH ratchett in the double rachett ensures that all future messages are encrypted if the current sending and recieveing chain keys become compromised. (((((This occurs as whenever a party sends a message they generate a DH key pair which becomes their current ratchet key and then they send off the public key with the message.)))))
 
-                   
+
+Q5b.
+
+    Diagram on paper
+
+    Implicit authentication is when authentication is never directly carried out but is implied when both parties reach a shared secret key. In the exchange below, this was done by combining the ephemeral keys with the long term identity keys to compute the shared secret key, if both parties get the same shared secret key then it means that the each party has the represective private used to compute the public key - i.e. they are who they say they are.
+    
+    The ephemeral keys are used to ensure perfect forward secreacy. It is important that as soon as the ssk has been generated the ephemeral keys are deleted for that both Diffie and Hellman. If this is kept around then it could be used (along side a identity key) to decrypt old messages. An ephemeral key should only be used for one messsage only and then it is to be deleted. This is naturally quite an inefficient process as inorder to send a message we have to randomly generate a key, compute a shared secret key and then encrypt. A ratchett could be used if this protocol was expected to encrypt a lot of messges in a short while.
+
+    Because the protocol uses Curve25519, it means that it's finding the secret key is based on ECDLP which is assumed to be hard, also due to the choice of prime in curve25519 it's resistant to generic attacks on DLP.
+
+    Implementation considerations:
+
+    The secret ephemeral key needs to be sampled from a perfect uniform distribution however most computers only have access to a pseudorandom number generator and so we would need to implement this with either a really good pseudorandom number generator or from actual random noise.
+
+    Double and add was implemented in code. Although not a necesity, it was used to simulate the in workings of quick x-only point addition on a montegomery curve.
