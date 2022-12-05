@@ -17,6 +17,13 @@ class Exchange():
         client = Party("client", self.G, self.G.GetGenerator(), self.G.P, None)#name, g, q, sigma
         server = Party("server", self.G, self.G.GetGenerator(), self.G.P, None)
 
+        c_stage1 = client.Stage1()
+        s_stage1 = server.Stage1()
+
+        c_stage2 = client.Stage2(s_stage1)
+        s_stage2 = server.Stage2(c_stage2)
+
+
         return
 
     def Setup():

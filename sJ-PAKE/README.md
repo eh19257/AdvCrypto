@@ -1,0 +1,3 @@
+# sJ-PAKE
+
+The sJ-PAKE protocol as described in [MAINPAPER] has been implemented in python. The security of the sJ-PAKE protocol relies on the securiy of Diffie-Hellman and non-interactive zero knowledge proofs, in our case we used the Ellipitic Curve25519 as our group for the diffie-hellman and we use SChnorr's Identification Protocol as our non-interactive zero knowledge protocol. Note: the labels C and S for the Client and Server reprectively are some randomly generated public labels/()

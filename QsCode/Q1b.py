@@ -15,6 +15,8 @@ Points = E.lift_x(Q, all=True)
 P_1 = Points[0]
 P_2 = Points[1]
 
+print(P_1)
+
 x_1 = (P_1[0]/P_1[1]) * sqrt( F(486664) )
 y_1 = (P_1[0] - 1)/(P_1[0] + 1)
 
