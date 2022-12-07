@@ -15,26 +15,24 @@ class NonInteractiveSchnorr:
         return 
     
     # Create a Non Interactive Commitment. We also return R here as it is needed for 
-    def Prv(self, sigma, x, l, sk):
+    def Prv(self, sigma, x, l):
 
-        #k = self.G.RandomlyGenerateGroupElement()
-        #R = self.G.DLP(sigma[1], k)
-        R = None
-        #e = int.from_bytes(self.Hash(R, sigma[0], sigma[1], l), "big")
-        e = int.from_bytes(self.Hash(l, sigma[0], sigma[1]), "big")
+        k = self.G.F.random_element()
+        R = self.G.DLP(sigma[1], k)
+        
+        e = self.G.F(int.from_bytes(self.Hash(R, sigma[0], sigma[1], l), "big"))
 
-        pi = sk + x*e
+        pi = k + x*e
         return pi, R
+
 
     # Verifies the incoming Non-interactive commitment
     def Ver(self, sigma, pi, l ,R):
-        #e = int.from_bytes(self.Hash(R, sigma[0], sigma[1], l), "big")
-        e = int.from_bytes(self.Hash(l, sigma[0], sigma[1]), "big")
+        e = self.G.F(int.from_bytes(self.Hash(R, sigma[0], sigma[1], l), "big"))
 
-        rhs = self.G.Op(self.G.DLP(sigma[1], pi), self.G.DLP(sigma[0], -e))
+        rhs = self.G.Op(self.G.DLP(sigma[1], pi), self.G.DLP(sigma[0], (-e)))
 
-        #return R == rhs
-        return l == rhs
+        return R == rhs
 
     
     # Generates hash for multiple args
