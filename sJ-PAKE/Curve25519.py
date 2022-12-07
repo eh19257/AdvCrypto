@@ -3,7 +3,6 @@
 #from cmath import sqrt
 #from operator import truediv
 from sage.all import *
-import random
 
 #class Group():
 #    def __init__():
@@ -13,7 +12,7 @@ import random
 class Curve25519():
 
     def __init__(self):
-        self.P = 2**255 - 19
+        self.P = (2**255 - 19)
         self.A = 486662
 
         self.F = GF(self.P)
@@ -21,16 +20,12 @@ class Curve25519():
         self.E = EllipticCurve(self.F, [0, self.A, 0, 1, 0])
 
     # Used to abstract out the group operation
-    def GroupOperation(self, A, B):
+    def Op(self, A, B):
         return A + B
     
     # DLP for group [n]g
-    def GroupSpecificDLP(self, g, n):
-        #out = self.F(0)
-        #for i in range(n):
-        #    out = self.GroupOperation(out, g)
-        
-        return g*n
+    def DLP(self, g, n):      
+        return n*g
 
     # Gets generator. In the case of Curve25519 we use 9 as our base point
     def GetGenerator(self):

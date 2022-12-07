@@ -15,14 +15,21 @@ Points = E.lift_x(Q, all=True)
 P_1 = Points[0]
 P_2 = Points[1]
 
-print(P_1)
+print("Point 1:", P_1)
+print("Point 1 + Point 1:", P_1 + P_1, "\n")
+
+
+print("Point 2:", P_2)
+print("Point 2 + Point 2:", P_2 + P_2, "\n")
+
+#print("Points:", E.lift_x((P_1+P_1)[0], all=True))
 
 x_1 = (P_1[0]/P_1[1]) * sqrt( F(486664) )
 y_1 = (P_1[0] - 1)/(P_1[0] + 1)
 
-print("Point: (", x_1, ", ", y_1, ")")
+print("Image of Point 1: (", x_1, ", ", y_1, ")")
 
 x_2 = (P_2[0]/P_2[1]) * sqrt( F(486664) )
 y_2 = (P_2[0] - 1)/(P_2[0] + 1)
 
-print("Point: (", x_2, ", ", y_2, ")")
+print("Image of Point 2: (", x_2, ", ", y_2, ")")

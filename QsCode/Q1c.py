@@ -22,7 +22,13 @@ Ed_y_1 = (P_1[0] - 1)/(P_1[0] + 1)
 
 Ed_P_1 = ( (2 * Ed_x_1 * Ed_y_1) / (1 + d * (Ed_x_1**2) * (Ed_y_1**2) ), (Ed_y_1**2 - Ed_x_1**2) / (1 - d * (Ed_x_1**2) * (Ed_y_1**2) ))
 
+
+print(P_1)
+print(P_1+P_1)
 print("First option for 2ϕ(P):", Ed_P_1)
+
+print(P_2)
+print(P_2+P_2)
 
 Ed_x_2 = (P_2[0]/P_2[1]) * sqrt( F(486664) )
 Ed_y_2 = (P_2[0] - 1)/(P_2[0] + 1)
