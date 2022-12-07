@@ -38,6 +38,8 @@ class Party():
 
         out = { "label" : self.pk }
 
+        print(self.x_1)
+
         self.X_1 = self.G.DLP(self.g, self.x_1)
         self.X_2 = self.G.DLP(self.g, self.x_2)
 
@@ -96,7 +98,7 @@ class Party():
 
         #return self.G.DLP(self.G.Op(beta, self.G.DLP(self.inParams["X_2"], self.G.Op(-self.x_2, self.pw))), self.x_2)
         
-        return (beta + self.inParams["X_2"] * (-self.x_2 + self.pw))* self.x_2
+        return (beta + (1 / self.inParams["X_2"]) * (self.x_2 + self.pw))* self.x_2
         
         if (self.isclient):
             return self.G.F(self.G.DLP(self.G.Op(beta, self.G.DLP(self.inParams["X_2"], self.G.Op(-self.x_2, self.pw))), self.x_2))
