@@ -57,10 +57,14 @@ class Q5b():
         Diffie_ssk  = self.Diffie.Stage2(Hellman_pub)
         Hellman_ssk = self.Hellman.Stage2(Diffie_pub)
 
+        print("Diffie's  ssk: {0}".format(Diffie_ssk))
+        print("Hellman's ssk: {0}".format(Hellman_ssk))
+        
         # Verifies the keys are the same 
         if (Diffie_ssk == Hellman_ssk):
-            print("THE KEYS ARE THE SAME (this isn't apart of the protocol - it is just for testing purposes)")
+            print("THE KEYS ARE THE SAME")
 
         return
+
 
 Q5b().run()

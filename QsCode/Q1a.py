@@ -24,7 +24,7 @@ print("X coordinate of 2P is:", Q_2, "\n")
 
 print("We don't care about the y value but here they are anyway:", E.lift_x(Q_2, all=True))
 
-print("\n\n", E.lift_x(F(4), all=True))
+#print("\n\n", E.lift_x(F(4), all=True))
 
 
 
